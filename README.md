@@ -12,7 +12,6 @@ Ce projet implémente un pipeline complet de data engineering et machine learnin
 ## Structure du projet
 
 ```
-data_engineering_ml_pipeline/
 │
 ├── data/                       # Dossier de données
 │   ├── raw/                    # Données brutes
@@ -32,7 +31,9 @@ data_engineering_ml_pipeline/
 │
 ├── notebooks/                  # Jupyter notebooks pour l'exploration
 │
-└── requirements.txt            # Dépendances du projet
+├── requirements.txt            # Dépendances du projet
+│
+└── .gitignore                  # Fichiers à ignorer par Git
 ```
 
 ## Installation

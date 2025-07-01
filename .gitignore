@@ -1,0 +1,91 @@
+# Fichiers Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Environnements virtuels
+venv/
+ENV/
+env/
+
+# Notebooks Jupyter
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+*.nbconvert.ipynb
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Fichiers de log
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Données volumineuses et modèles (à adapter selon vos besoins)
+data/raw/*
+data/processed/*
+models/*.joblib
+models/*.pkl
+*.csv
+*.json
+*.h5
+*.hdf5
+*.model
+
+# Exceptions pour inclure certains fichiers de données
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!models/.gitkeep
+
+# Fichiers d'environnement qui peuvent contenir des informations sensibles
+.env
+.venv
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.project
+.pydevproject
+.settings
+
+# Fichiers spécifiques à Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
