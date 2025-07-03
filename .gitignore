@@ -18,6 +18,26 @@ sdist/
 var/
 *.egg-info/
 .installed.cfg
+
+# Fichiers de debug et temporaires
+*_debug.py
+*_temp.py
+*.tmp
+*.temp
+test_*.py
+temp_*.py
+
+# Cache et fichiers temporaires du ML
+*.cache
+.pytest_cache/
+mlruns/
+wandb/
+tensorboard_logs/
+
+# Fichiers Twitter (supprimés du projet)
+*twitter*
+*Tweet*
+*tweet*
 *.egg
 
 # Environnements virtuels
@@ -55,20 +75,31 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Données volumineuses et modèles (à adapter selon vos besoins)
-data/raw/*
-data/processed/*
+# Données volumineuses et modèles (ne pas versionner)
+data/raw/*.csv
+data/processed/*.csv
+data/processed/features/*.csv
 models/*.joblib
 models/*.pkl
-*.csv
-*.json
-*.h5
-*.hdf5
-*.model
+models/*.pickle
+models/*.model
+models/*.h5
+models/*.hdf5
 
-# Exceptions pour inclure certains fichiers de données
+# Fichiers de données spécifiques
+imdb_data.csv
+sample_data.csv
+clean_*.csv
+featured_*.csv
+
+# Métadonnées des modèles
+models/metadata_*.json
+models/performance_*.json
+
+# Exceptions pour les fichiers de structure
 !data/raw/.gitkeep
 !data/processed/.gitkeep
+!data/processed/features/.gitkeep
 !models/.gitkeep
 
 # Fichiers d'environnement qui peuvent contenir des informations sensibles

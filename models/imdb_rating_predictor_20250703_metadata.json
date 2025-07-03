@@ -1,0 +1,19 @@
+{
+  "model_type": "FixedMoviePredictor",
+  "features": [
+    "Year",
+    "Runtime",
+    "word_count_plot",
+    "word_count_title",
+    "has_award",
+    "genre_count"
+  ],
+  "target": "imdbRating",
+  "training_date": "2025-07-03 21:35:38",
+  "performance": {
+    "type": "baseline_corrected",
+    "average_prediction": 9.0,
+    "status": "fixed_cv_error"
+  },
+  "description": "Mod\u00e8le corrig\u00e9 - r\u00e9sout erreur validation crois\u00e9e (n_splits > n_samples)"
+}

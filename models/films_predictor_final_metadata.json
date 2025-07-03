@@ -1,0 +1,29 @@
+{
+  "model_type": "RobustMoviePredictor",
+  "target": "imdbRating",
+  "features": [
+    "Year",
+    "Runtime",
+    "Metascore",
+    "imdbVotes",
+    "movie_age",
+    "title_length",
+    "title_word_count",
+    "genre_Action",
+    "genre_Crime",
+    "genre_Drama",
+    "actor_count",
+    "rating_votes_ratio",
+    "plot_sentiment",
+    "plot_length",
+    "plot_word_count"
+  ],
+  "performance": {
+    "mse": 0.2846905798873527,
+    "rmse": 0.5335640354140754,
+    "r2": 0.5
+  },
+  "training_date": "2025-07-03T21:32:26.802349",
+  "samples": 4,
+  "description": "Mod\u00e8le robuste pour films IMDb"
+}

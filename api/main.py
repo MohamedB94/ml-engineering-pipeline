@@ -198,7 +198,16 @@ async def predict_imdb_rating(movie: MovieInput):
     
     # Préparation des données pour la prédiction
     # Dans un cas réel, il faudrait effectuer le même prétraitement que lors de l'entraînement
-    X = movie_df.copy()
+    
+    # Créer des features simples pour la démonstration
+    X = pd.DataFrame({
+        'Year': [movie_data.get('year', 2000)],
+        'Runtime': [movie_data.get('runtime', 120)],
+        'word_count_plot': [len(str(movie_data.get('plot', '')).split())],
+        'word_count_title': [len(str(movie_data.get('title', '')).split())],
+        'has_award': [1 if 'award' in str(movie_data.get('plot', '')).lower() else 0],
+        'genre_count': [len(str(movie_data.get('genre', '')).split(','))]
+    })
     
     # Réalisation de la prédiction
     try:

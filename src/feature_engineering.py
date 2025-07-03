@@ -50,7 +50,9 @@ def engineer_imdb_features(input_file='clean_imdb_data.csv'):
     # 1. Âge du film (années depuis sa sortie)
     if 'Year' in df.columns:
         current_year = datetime.now().year
-        df['movie_age'] = current_year - df['Year']
+        # Convertir Year en numérique pour éviter les erreurs de type
+        df['Year_numeric'] = pd.to_numeric(df['Year'], errors='coerce').fillna(current_year)
+        df['movie_age'] = current_year - df['Year_numeric']
     
     # 2. Analyse du titre
     if 'Title' in df.columns:
@@ -72,7 +74,10 @@ def engineer_imdb_features(input_file='clean_imdb_data.csv'):
     
     # 5. Ratio votes/note
     if 'imdbRating' in df.columns and 'imdbVotes' in df.columns:
-        df['rating_votes_ratio'] = df['imdbRating'] / (df['imdbVotes'] + 1)  # Éviter division par zéro
+        # Convertir imdbVotes en numérique (gérer les virgules comme séparateurs de milliers)
+        df['imdbVotes_numeric'] = pd.to_numeric(df['imdbVotes'].astype(str).str.replace(',', ''), errors='coerce').fillna(0)
+        df['imdbRating_numeric'] = pd.to_numeric(df['imdbRating'], errors='coerce').fillna(0)
+        df['rating_votes_ratio'] = df['imdbRating_numeric'] / (df['imdbVotes_numeric'] + 1)  # Éviter division par zéro
     
     # 6. Analyse de sentiment pour le résumé (Plot)
     if 'Plot' in df.columns:
@@ -195,21 +200,21 @@ def engineer_custom_features(input_file, config=None):
     print(f"Feature engineering personnalisé: {df.shape[0]} lignes chargées.")
     
     # 1. Normalisation/standardisation
-    if config['scale_columns']:
+    if config.get('scale_columns'):
         scaler = StandardScaler()
         scaled_features = scaler.fit_transform(df[config['scale_columns']])
         scaled_df = pd.DataFrame(scaled_features, columns=[f"{col}_scaled" for col in config['scale_columns']])
         df = pd.concat([df, scaled_df], axis=1)
     
     # 2. One-hot encoding
-    if config['onehot_columns']:
+    if config.get('onehot_columns'):
         for col in config['onehot_columns']:
             if col in df.columns:
                 dummies = pd.get_dummies(df[col], prefix=col)
                 df = pd.concat([df, dummies], axis=1)
     
     # 3. Binning (discrétisation)
-    if config['bin_columns']:
+    if config.get('bin_columns'):
         for col_info in config['bin_columns']:
             col = col_info['column']
             bins = col_info.get('bins', 5)
@@ -218,11 +223,33 @@ def engineer_custom_features(input_file, config=None):
                 df[f"{col}_binned"] = pd.cut(df[col], bins=bins, labels=False)
     
     # 4. Interactions (produits croisés)
-    if config['interactions']:
-        for interaction in config['interactions']:
+    if config.get('interaction_columns'):
+        for interaction in config['interaction_columns']:
             col1, col2 = interaction
             if col1 in df.columns and col2 in df.columns:
                 df[f"{col1}_{col2}_interaction"] = df[col1] * df[col2]
+    
+    # 5. Transformations polynomiales
+    if config.get('polynomial_columns'):
+        for col in config['polynomial_columns']:
+            if col in df.columns:
+                df[f"{col}_squared"] = df[col] ** 2
+                df[f"{col}_cubed"] = df[col] ** 3
+    
+    # 6. Transformations logarithmiques
+    if config.get('log_transform_columns'):
+        for col in config['log_transform_columns']:
+            if col in df.columns:
+                # Éviter log(0) en ajoutant 1
+                df[f"log_{col}"] = np.log(df[col] + 1)
+    
+    # 7. Caractéristiques temporelles
+    if config.get('date_columns'):
+        for col in config['date_columns']:
+            if col in df.columns:
+                # Créer l'âge basé sur l'année de sortie
+                current_year = 2024
+                df[f"{col}_age"] = current_year - df[col]
     
     # Sauvegarde des données avec nouvelles caractéristiques
     os.makedirs(FEATURES_DATA_DIR, exist_ok=True)

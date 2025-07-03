@@ -140,9 +140,16 @@ def train_regression_model(X_train, y_train, X_test, y_test, features, model_typ
         ('model', model)
     ])
     
-    # Recherche des meilleurs hyperparamètres
+    # Recherche des meilleurs hyperparamètres avec CV adaptatif
     param_grid = {'model__' + key: value for key, value in param_grid.items()}
-    grid_search = GridSearchCV(pipeline, param_grid, cv=5, scoring='r2', n_jobs=-1)
+    
+    # Ajustement du nombre de plis selon la taille des données
+    n_samples = len(X_train)
+    cv_folds = min(5, max(2, n_samples // 2))  # Entre 2 et 5 plis
+    
+    print(f"Utilisation de {cv_folds} plis pour la validation croisée (dataset: {n_samples} échantillons)")
+    
+    grid_search = GridSearchCV(pipeline, param_grid, cv=cv_folds, scoring='r2', n_jobs=-1)
     grid_search.fit(X_train, y_train)
     
     print(f"Meilleurs hyperparamètres: {grid_search.best_params_}")
@@ -354,6 +361,66 @@ def train_classification_model(X_train, y_train, X_test, y_test, features, model
         print(f"Graphique d'importance des caractéristiques sauvegardé dans {feature_plot_path}")
     
     return best_model, performance
+
+def train_regression_model_simple(X_train, y_train, X_test, y_test, features, model_type='random_forest'):
+    """
+    Entraîne un modèle de régression sans validation croisée (pour les petits datasets).
+    
+    Args:
+        X_train (DataFrame): Données d'entraînement
+        y_train (Series): Variable cible d'entraînement
+        X_test (DataFrame): Données de test
+        y_test (Series): Variable cible de test
+        features (list): Liste des noms des caractéristiques
+        model_type (str): Type de modèle à entraîner
+        
+    Returns:
+        tuple: (modèle_entraîné, métriques_performance)
+    """
+    print(f"Entraînement d'un modèle {model_type} (mode simple)...")
+    
+    # Sélection du modèle selon le type
+    if model_type == 'linear_regression':
+        model = LinearRegression()
+    elif model_type == 'random_forest':
+        model = RandomForestRegressor(n_estimators=50, max_depth=10, random_state=42)
+    elif model_type == 'gradient_boosting':
+        model = GradientBoostingRegressor(n_estimators=50, max_depth=5, random_state=42)
+    elif model_type == 'svr':
+        model = SVR(C=1.0, kernel='rbf')
+    else:
+        print(f"Type de modèle '{model_type}' non reconnu. Utilisation de RandomForest par défaut.")
+        model = RandomForestRegressor(n_estimators=50, random_state=42)
+    
+    # Pipeline simple avec standardisation
+    pipeline = Pipeline([
+        ('scaler', StandardScaler()),
+        ('model', model)
+    ])
+    
+    # Entraînement du modèle
+    pipeline.fit(X_train, y_train)
+    
+    # Évaluation du modèle
+    y_pred = pipeline.predict(X_test)
+    
+    # Métriques de performance
+    mse = mean_squared_error(y_test, y_pred)
+    rmse = np.sqrt(mse)
+    r2 = r2_score(y_test, y_pred)
+    
+    performance = {
+        'mse': mse,
+        'rmse': rmse,
+        'r2_score': r2
+    }
+    
+    print(f"Performance du modèle (mode simple):")
+    print(f"  MSE: {mse:.4f}")
+    print(f"  RMSE: {rmse:.4f}")
+    print(f"  R²: {r2:.4f}")
+    
+    return pipeline, performance
 
 def save_model(model, model_name, metadata=None):
     """

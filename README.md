@@ -1,4 +1,4 @@
-# Pipeline de Data Engineering et Machine Learning
+# ML Engineering Pipeline
 
 Ce projet implémente un pipeline complet de data engineering et machine learning avec les étapes suivantes :
 
