@@ -1,23 +1,67 @@
-# ML Engineering Pipeline
+# 🎬 ML Engineering Pipeline - Film Analysis
 
-Ce projet implémente un pipeline complet de data engineering et machine learning avec les étapes suivantes :
+Un pipeline complet de machine learning pour l'analyse et la prédiction de données de films.
 
-1. **Collecte de données** : Extraction de données depuis différentes sources (IMDb, Twitter, CSV)
-2. **Nettoyage des données** : Prétraitement et nettoyage
-3. **Feature Engineering** : Création de nouvelles caractéristiques pour améliorer les modèles
-4. **Entraînement de modèle** : Utilisation de scikit-learn pour entraîner un modèle ML
-5. **Stockage du modèle** : Sauvegarde avec joblib
-6. **Déploiement API** : Exposition du modèle via FastAPI
+## 🚀 Vue d'ensemble
 
-## Structure du projet
+Ce projet implémente un pipeline end-to-end pour :
+- Collecte de données de films (IMDb, CSV)
+- Nettoyage et preprocessing des données
+- Feature engineering avancé
+- Entraînement de modèles ML
+- API REST pour les prédictions
+- Visualisations et analyses
 
+## ✨ Fonctionnalités
+
+### 📊 Données Supportées
+- **IMDb** : Films, notes, votes, genres, acteurs
+- **CSV** : Budget, box office, durée, métadonnées
+
+### 🔧 Techniques ML
+- Preprocessing robuste avec gestion des types
+- Feature engineering (scaling, one-hot, interactions)
+- Modèles : Random Forest, Gradient Boosting, Régression
+- Validation croisée et métriques de performance
+
+### 🌐 API REST
+- Prédictions en temps réel
+- Interface FastAPI
+- Documentation automatique
+
+## 🛠️ Installation
+
+```bash
+# Cloner le repository
+git clone https://github.com/MohamedB94/ml-engineering-pipeline.git
+cd ml-engineering-pipeline
+
+# Créer un environnement virtuel
+python -m venv .venv
+.venv\Scripts\activate  # Windows
+# source .venv/bin/activate  # Linux/Mac
+
+# Installer les dépendances
+pip install -r requirements.txt
 ```
-│
-├── data/                       # Dossier de données
-│   ├── raw/                    # Données brutes
-│   └── processed/              # Données traitées
-│
-├── src/                        # Code source
+
+## 🚀 Utilisation
+
+### 1. Notebook Jupyter
+```bash
+jupyter notebook notebooks/data_engineering_ml_pipeline.ipynb
+```
+
+### 2. API REST
+```bash
+python launch_api.py
+```
+Accéder à : http://localhost:8000/docs
+
+### 3. Launcher Windows
+```bash
+launcher.bat
+```
 │   ├── data_collection.py      # Scripts de collecte de données
 │   ├── data_cleaning.py        # Scripts de nettoyage
 │   ├── feature_engineering.py  # Scripts pour la création de features
