@@ -1,5 +1,10 @@
 # 🎬 ML Engineering Pipeline - Film Analysis
 
+[![GitHub](https://img.shields.io/badge/GitHub-MohamedB94%2Fml--engineering--pipeline-blue?style=flat-square&logo=github)](https://github.com/MohamedB94/ml-engineering-pipeline)
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=flat-square&logo=python)](https://www.python.org/)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Production%20Ready-success?style=flat-square)](https://github.com/MohamedB94/ml-engineering-pipeline)
+
 Un pipeline complet de machine learning pour l'analyse et la prédiction de données de films.
 
 ## 🚀 Vue d'ensemble
